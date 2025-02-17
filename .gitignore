@@ -1,0 +1,28 @@
+# Ignore all node_modules in subdirectories
+node_modules/
+**/node_modules/
+
+# Ignore build and cache files
+**/dist/
+**/build/
+**/.next/
+**/.parcel-cache/
+
+# Ignore environment files
+.env
+.env.local
+.env.development
+.env.production
+
+# Ignore logs and lock files
+*.log
+yarn.lock
+package-lock.json
+
+# Ignore VSCode & IDE settings
+.vscode/
+.idea/
+.DS_Store
+
+# Ignore coverage reports
+**/coverage/
