@@ -1,89 +1,43 @@
-import React, { useState, useCallback, useEffect } from "react";
-import styled from "styled-components";
+import React, { useState, useCallback } from "react";
 
-// Styled Components
-const Container = styled.div`
-  padding: 20px;
-  max-width: 400px;
-  margin: auto;
-  text-align: center;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background: #f4f4f4;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-`;
-
-const RangeInput = styled.input`
-  width: 100%;
-  margin-bottom: 10px;
-`;
-
-const Label = styled.label`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 5px 0;
-`;
-
-const CheckboxContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  margin: 10px 0;
-`;
-
-const Password: React.FC = () => {
-  const [password, setPassword] = useState<string>("");
-  const [length, setLength] = useState<number>(12);
-  const [includeUpper, setIncludeUpper] = useState<boolean>(true);
-  const [includeLower, setIncludeLower] = useState<boolean>(true);
-  const [includeNumbers, setIncludeNumbers] = useState<boolean>(true);
-  const [includeSymbols, setIncludeSymbols] = useState<boolean>(true);
-
-  // Function to generate a password
-  const generatePassword = useCallback(() => {
-    let chars = "";
-    if (includeUpper) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    if (includeLower) chars += "abcdefghijklmnopqrstuvwxyz";
-    if (includeNumbers) chars += "0123456789";
-    if (includeSymbols) chars += "!@#$%^&*()_+=-{}[]<>?/";
-
-    if (!chars) return;
-
-    let newPassword = "";
-    for (let i = 0; i < length; i++) {
-      newPassword += chars[Math.floor(Math.random() * chars.length)];
-    }
-
-    setPassword(newPassword);
-  }, [length, includeUpper, includeLower, includeNumbers, includeSymbols]);
-
-  // Automatically generate a new password when settings change
-  useEffect(() => {
-    generatePassword();
-  }, [generatePassword]);
+// TodoList Component
+const TodoList: React.FC<{ todos: string[]; addTodo: () => void }> = React.memo(({ todos, addTodo }) => {
+  console.log("TodoList re-rendered!");
 
   return (
-    <Container>
-      <h2>Password Generator</h2>
-      <Input type="text" value={password} readOnly />
+    <div>
+      <ul>
+        {todos.map((todo, index) => (
+          <li key={index}>{todo}</li>
+        ))}
+      </ul>
+      <button onClick={addTodo}>Add Todo Again</button>
+    </div>
+  );
+});
 
-      <Label>Password Length: {length}</Label>
-      <RangeInput type="range" min="6" max="20" value={length} onChange={(e) => setLength(Number(e.target.value))} />
+const TodoApp: React.FC = () => {
+  const [todos, setTodos] = useState<string[]>([]);
+  const [input, setInput] = useState<string>("");
 
-      <CheckboxContainer>
-        <Label><input type="checkbox" checked={includeUpper} onChange={() => setIncludeUpper(!includeUpper)} /> Uppercase</Label>
-        <Label><input type="checkbox" checked={includeLower} onChange={() => setIncludeLower(!includeLower)} /> Lowercase</Label>
-        <Label><input type="checkbox" checked={includeNumbers} onChange={() => setIncludeNumbers(!includeNumbers)} /> Numbers</Label>
-        <Label><input type="checkbox" checked={includeSymbols} onChange={() => setIncludeSymbols(!includeSymbols)} /> Symbols</Label>
-      </CheckboxContainer>
-    </Container>
+  // Memoizing addTodo to prevent unnecessary function recreation
+  const addTodo = useCallback(() => {
+    if (input.trim() !== "") {
+      setTodos((prevTodos) => [...prevTodos, input]);
+      setInput(""); // Clear input after adding
+    }
+  }, [input]);
+
+  return (
+    <div style={{ textAlign: "center", padding: "20px" }}>
+      <h2>Todo List</h2>
+      <input type="text" value={input} onChange={(e) => setInput(e.target.value)} />
+      <button onClick={addTodo}>Add Todo</button>
+
+      {/* Render TodoList inside the same file */}
+      <TodoList todos={todos} addTodo={addTodo} />
+    </div>
   );
 };
 
-export default Password;
+export default TodoApp;

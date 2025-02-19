@@ -10,7 +10,8 @@ import Button2 from './css/Exampletwo/Exampletwo'
 import Button3 from './css/StyledComponent/StyledComponent'
 import Counter from './components/Hooks/counter/Counter'
 import FetchData from './components/Hooks/UseEffect/UseEffect'
-import Password from './components/Hooks/UseCallBack/Password'
+import UseRef from './components/Hooks/UseRef/UseRef'
+import FetchApi from './components/FetchingData/FetchApi'
 
 const App: React.FC =()=> {
  
@@ -27,7 +28,8 @@ const App: React.FC =()=> {
     {/* <Counter/> */}
 {/* <FetchData/> */}
 
-<Password/>
+{/* <UseRef/> */}
+<FetchApi/>
      </div>
   );
     </>

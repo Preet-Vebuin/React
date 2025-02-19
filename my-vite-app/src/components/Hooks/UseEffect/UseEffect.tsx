@@ -29,3 +29,32 @@ const FetchData : React.FC = () => {
 }; // [] empty dependency array only runs when component mount
 
 export default FetchData;
+
+// import './App.css';
+// import { useEffect, useState } from 'react';
+
+// function App() {
+
+//   const [name, setName] = useState('John');
+//    useEffect(()=>{
+//     console.log("1- No dependency array at all");
+//   });
+//   useEffect(()=>{
+//     console.log("2- Empty dependency array");
+//   }, []);
+//   useEffect(()=>{
+//     console.log("3- Dependency array with state");
+//   }, [name]);
+
+//   const clickHandler = () => {
+//     setName('Jane');
+//   }
+//   return (
+//     <div className="App">
+//       <button onClick={clickHandler}>Click to update state</button>
+//       <p>{`Name: ${name}`}</p>
+//     </div>
+//   );
+// }
+
+// export default App;
